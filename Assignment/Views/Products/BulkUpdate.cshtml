@@ -1,0 +1,57 @@
+﻿@model Assignment.Models.ViewModels.BulkProductViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<form  asp-action="BulkUpdatedata" asp-controller="Products" method="post" enctype="multipart/form-data">
+   <input type="submit" value="Update"  class="btn btn-info"/>
+    <table class="table table-danger">
+        <thead>
+            <tr>
+                <th> &nbsp;</th>
+                <th>Name</th>   
+                <th>Price</th>  
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                @* <tr>
+                    <td>
+                        <input type="hidden" name="Id[]" value="@product.Id" />
+                    </td>
+                    <td>  <input type="text" name="Name[]" value="@product.Name" /></td>
+                    <td>  <input type="number" name="Price[]" value="@product.Price" /></td>
+                    <td>
+                        <input type="file" name="ImageFile[]" value="@product.ImagePath" />
+                        <img src="@product.ImagePath" alt="@product.Name" width="100" />
+                    </td>
+                </tr> *@
+
+                <tr>
+                    <td>
+                        <input type="hidden" name="Products.Index" value="@product.Id" />
+                        <input type="hidden" name="Products[@product.Id].Id" value="@product.Id" required />
+                    </td>
+                    <td>
+                        <input type="text" name="Products[@product.Id].Name" value="@product.Name"  required/>
+                    </td>
+                    <td>
+                        <input type="number" name="Products[@product.Id].Price" value="@product.Price" required />
+                    </td>
+                    <td>
+                        <input type="file" name="Products[@product.Id].ImageFile"  value="~/@product.ImagePath"required />
+                        <img src="~/@product.ImagePath" alt="@product.Name" width="100" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+</form>
+
+

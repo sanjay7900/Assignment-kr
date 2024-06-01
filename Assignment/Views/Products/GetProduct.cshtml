@@ -1,0 +1,129 @@
+﻿@model Assignment.Models.ViewModels.BulkProductViewModel
+
+@{
+    ViewData["Title"] = "GetProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int count = Convert.ToInt32(ViewData["PageCount"]);
+}
+
+<h1>GetProduct</h1>
+
+
+<div class="addProduct">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" id="openModalBtn">
+       Add Product
+    </button>
+
+    <div class="float-end ">
+    <div class="row flex-lg-row ">
+        <div class="btn btn-info col ">
+          <form asp-action="Update" asp-controller="Products" method="post" class="p-1 m-2">
+                    <div class="hiddenInputsContainer"></div>
+            <input type="hidden" name="Action" value="1" id="" />
+            <input  type="submit" id="upd" value="Update Product"/>
+            </form>
+        </div>
+            <div class="btn btn-info col ">
+                <form asp-action="Update" asp-controller="Products" method="post"  class="p-1 m-2">
+                    <div class="hiddenInputsContainer"></div>
+                    <input type="hidden" name="Action" value="0" />
+
+                    <input type="submit"id="del" value="Delete Product" />
+
+                </form>
+            </div>
+     </div>
+     </div>
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Product Form</h2>
+            <form asp-action="Create" asp-controller="Products" method="post" enctype="multipart/form-data" id="productForm">
+
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="Name" required>
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="Price" required>
+                <label for="image">Image Path:</label>
+                <input type="file" id="image" name="ImageFile" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <table class="table mytable">
+        <thead class="thead-dark">
+            <tr>
+                <th><input type="checkbox" class="getValuesBtn" id="select-all" /></th>
+
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Products.Count > 0)
+            {
+
+
+
+
+                @foreach (var product in Model.Products)
+                {
+                    <tr itemscope="indexer">
+                        <td scope="col">
+                            <input type="checkbox" class="getValuesBtn" name="SelectedProductIds" value="@product.Id" />
+                        </td>
+                        <td scope="col">@product.Name</td>
+                        <td scope="col">@product.Price</td>
+                        <td scope="col">
+                            <img src="~/@product.ImagePath" alt="@product.Name" width="100" />
+                        </td>
+                    </tr>
+                }
+            }
+           
+        </tbody>
+    </table>
+
+
+
+
+    <ul class="pagination pagination-container">
+               
+                      
+                @for(int i = 1; i <=count; i++)
+                {
+                  int a = i == 1 ? 0 : i;
+                  <li><a href="#@a"  class="page-link">@i</a></li>
+                    
+                    
+                }
+
+            </ul>
+<br />
+<br />
+   
+
+    
+    
+
+<script>
+    document.getElementById('select-all').addEventListener('click', function (event) {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"][name="SelectedProductIds"]');
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = event.target.checked;
+        });
+    });
+</script>
+
+@section Scripts {
+    <script src="~/js/model.js">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate.unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+}
+

@@ -1,0 +1,28 @@
+﻿@model Assignment.Models.ViewModels.BulkProductViewModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@if (Model.Products.Count > 0)
+{
+
+
+
+
+    @foreach (var product in Model.Products)
+    {
+        <tr itemscope="indexer">
+            <td scope="col">
+                <input type="checkbox" class="getValuesBtn" name="SelectedProductIds" value="@product.Id" />
+            </td>
+            <td scope="col">@product.Name</td>
+            <td scope="col">@product.Price</td>
+            <td scope="col">
+                <img src="~/@product.ImagePath" alt="@product.Name" width="100" />
+            </td>
+        </tr>
+    }
+}
